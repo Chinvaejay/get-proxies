@@ -1,0 +1,24 @@
+{
+  "name": "get-proxies",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chinvaejay/get-proxies.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chinvaejay/get-proxies/issues"
+  },
+  "homepage": "https://github.com/Chinvaejay/get-proxies#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "puppeteer": "^12.0.1"
+  }
+}
