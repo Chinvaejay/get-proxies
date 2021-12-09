@@ -1,7 +1,7 @@
 const fs = require('fs');
 const c = require('child_process');
 
-async function run() {
+async function getProxies() {
   return new Promise((res, rej) => {
     c.exec(
       'curl https://proxy.yugogo.xyz/clash/proxies?c=US,HK&speed=15,30&type=ss,ssr',
@@ -17,5 +17,5 @@ async function run() {
 }
 
 module.exports = {
-  run,
+  getProxies,
 };

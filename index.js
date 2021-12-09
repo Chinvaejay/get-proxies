@@ -1,32 +1,40 @@
 const fs = require('fs');
 const express = require('express');
 const { getConfig } = require('./getConfig');
-const { run } = require('./getProxies');
+const { getProxies } = require('./getProxies');
 
 const app = express();
 const port = process.env.PORT || 3003;
 
-app.get('/', (_, res) => {
+app.get('/', async (_, res) => {
+  if (req.query.refresh) {
+    try {
+      await getProxies();
+    } catch (e) {
+      res.json(e);
+    }
+  }
   let txt;
   try {
     txt = fs.readFileSync('./r.yaml');
   } catch (e) {
     txt = '请先获取配置';
+    await getProxies();
+    res.redirect('/');
   }
-  res.send(txt);
-});
-app.get('/get-proxies', async (_, res) => {
-  try {
-    await run();
-  } catch (e) {
-    res.json(e);
-  }
-  res.send('获取成功');
+  res.end(txt);
 });
 
-app.get('/get-config', async (_, res) => {
+app.get('/get-config', async (req, res) => {
+  if (req.query.refresh) {
+    try {
+      await getProxies();
+    } catch (e) {
+      res.json(e);
+    }
+  }
   const config = await getConfig();
-  res.send(config);
+  res.end(config);
 });
 
 app.listen(port);
