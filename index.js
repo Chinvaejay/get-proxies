@@ -8,7 +8,7 @@ const port = process.env.PORT || 3003;
 
 getProxies();
 
-app.get('/', async (_, res) => {
+app.get('/', async (req, res) => {
   if (req.query.refresh) {
     try {
       await getProxies();
