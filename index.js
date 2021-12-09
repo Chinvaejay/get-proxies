@@ -16,7 +16,11 @@ app.get('/', (_, res) => {
   res.send(txt);
 });
 app.get('/get-proxies', async (_, res) => {
-  await run();
+  try {
+    await run();
+  } catch (e) {
+    res.json(e);
+  }
   res.send('获取成功');
 });
 
