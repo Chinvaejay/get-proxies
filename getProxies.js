@@ -1,15 +1,22 @@
 const fs = require('fs');
-const puppeteer = require('puppeteer');
+const c = require('child_process');
 
-async function run() {
-  const browser = await puppeteer.launch({
-    headless: true,
+async function getProxy() {
+  return new Promise((res, rej) => {
+    c.exec(
+      'curl https://proxy.yugogo.xyz/clash/proxies?speed=15,30',
+      (err, out) => {
+        if (err) {
+          rej(err);
+        }
+        fs.writeFileSync('r.yaml', out);
+        res();
+      }
+    );
   });
-
-  const page = await browser.newPage();
-  await page.goto('https://proxy.yugogo.xyz/clash/proxies?speed=15,30&');
-  const data = await page.$eval('body', (el) => el.innerText);
-  fs.writeFileSync('r.yaml', data);
+}
+async function run() {
+  await getProxy();
 }
 
 module.exports = {
