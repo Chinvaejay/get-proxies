@@ -6,6 +6,8 @@ const { getProxies } = require('./getProxies');
 const app = express();
 const port = process.env.PORT || 3003;
 
+getProxies();
+
 app.get('/', async (_, res) => {
   if (req.query.refresh) {
     try {
@@ -22,7 +24,7 @@ app.get('/', async (_, res) => {
     await getProxies();
     res.redirect('/');
   }
-  res.end(txt);
+  res.send(txt);
 });
 
 app.get('/get-config', async (req, res) => {
@@ -34,7 +36,7 @@ app.get('/get-config', async (req, res) => {
     }
   }
   const config = await getConfig();
-  res.end(config);
+  res.send(config);
 });
 
 app.listen(port);
